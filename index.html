@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MC GameHub | Play Your Way</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0b14;color:#fff;font-family:Arial,sans-serif}
+header{padding:22px 6%;background:#141421;border-bottom:1px solid #292941}
+.logo{font-size:27px;font-weight:900;color:#9b7bff}
+.logo span{color:#fff}
+.hero{padding:55px 6%;background:linear-gradient(120deg,#24134c,#10101e 70%)}
+h1{font-size:clamp(32px,6vw,54px);margin:0 0 12px}
+p{color:#c1c1d2;line-height:1.6}
+input{width:100%;max-width:500px;padding:14px;border-radius:10px;border:1px solid #42425b;background:#171725;color:white;font-size:16px}
+main{padding:28px 6%}
+h2{margin-top:8px}
+.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:#171725;border:1px solid #303047;border-radius:15px;overflow:hidden}
+.art{height:120px;display:grid;place-items:center;font-size:48px;background:linear-gradient(135deg,#35216b,#19192c)}
+.info{padding:17px}
+.info h3{margin:0 0 8px}
+.tag{font-size:12px;color:#b9a5ff}
+.btn{display:block;text-align:center;text-decoration:none;background:#7652ef;color:white;padding:12px;border-radius:8px;margin-top:14px;font-weight:bold}
+.btn:hover{background:#8b6cff}
+footer{padding:28px 6%;color:#aaa;font-size:13px;border-top:1px solid #292941}
+</style>
+</head>
+<body>
+<header><div class="logo">MC<span> GAMEHUB</span></div></header>
+<section class="hero">
+<h1>ENTER YOUR<br>GAMING WORLD.</h1>
+<p>Discover popular games, explore new adventures and find official downloads in one place.</p>
+<input id="search" placeholder="Search games..." oninput="filterGames()">
+</section>
+<main>
+<h2>🔥 Popular Games</h2>
+<p>Choose a game to visit its official download page.</p>
+<div class="games" id="games">
+<article class="card" data-name="efootball">
+<div class="art">⚽</div><div class="info">
+<span class="tag">FOOTBALL</span><h3>eFootball</h3>
+<p>Build your dream team and play football.</p>
+<a class="btn" href="https://www.konami.com/efootball/" target="_blank" rel="noopener">Official Website ↗</a>
+</div></article>
+<article class="card" data-name="call of duty mobile">
+<div class="art">🎯</div><div class="info">
+<span class="tag">ACTION</span><h3>Call of Duty: Mobile</h3>
+<p>Fast-paced multiplayer shooting action.</p>
+<a class="btn" href="https://www.callofduty.com/mobile" target="_blank" rel="noopener">Official Website ↗</a>
+</div></article>
+<article class="card" data-name="pubg mobile">
+<div class="art">🪖</div><div class="info">
+<span class="tag">BATTLE ROYALE</span><h3>PUBG Mobile</h3>
+<p>Battle to be the last player standing.</p>
+<a class="btn" href="https://www.pubgmobile.com/" target="_blank" rel="noopener">Official Website ↗</a>
+</div></article>
+<article class="card" data-name="roblox">
+<div class="art">🎮</div><div class="info">
+<span class="tag">CREATIVE</span><h3>Roblox</h3>
+<p>Explore experiences created by players.</p>
+<a class="btn" href="https://www.roblox.com/" target="_blank" rel="noopener">Official Website ↗</a>
+</div></article>
+<article class="card" data-name="minecraft">
+<div class="art">⛏️</div><div class="info">
+<span class="tag">ADVENTURE</span><h3>Minecraft</h3>
+<p>Build, explore and survive your world.</p>
+<a class="btn" href="https://www.minecraft.net/" target="_blank" rel="noopener">Official Website ↗</a>
+</div></article>
+<article class="card" data-name="fortnite">
+<div class="art">🌌</div><div class="info">
+<span class="tag">ACTION</span><h3>Fortnite</h3>
+<p>Explore battle royale and other game modes.</p>
+<a class="btn" href="https://www.fortnite.com/" target="_blank" rel="noopener">Official Website ↗</a>
+</div></article>
+</div>
+<p id="empty" hidden>No games found. Try another title.</p>
+</main>
+<footer>
+<strong>MC GameHub</strong><p>Independent game discovery website. We are not affiliated with the game publishers. Games and trademarks belong to their respective owners. Availability varies by device and region.</p>
+<p>Contact: Add your business email here.</p>
+</footer>
+<script>
+function filterGames(){
+const q=document.getElementById('search').value.toLowerCase();
+let count=0;
+document.querySelectorAll('.card').forEach(card=>{
+const show=card.dataset.name.includes(q);
+card.style.display=show?'block':'none';
+if(show)count++;
+});
+document.getElementById('empty').hidden=count!==0;
+}
+</script>
+</body>
+</html>
