@@ -4,353 +4,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#100b20">
-<title>MC GameHub - Find Any Game</title>
+<meta name="theme-color" content="#080d18">
+<title>MC GameHub</title>
 <style>
 *{box-sizing:border-box}
-:root{--bg:#0d0a18;--panel:#1b1530;--line:#403254;--purple:#9966ff;--pink:#ff65bd;--text:#faf7ff;--muted:#bdb3d5}
-body{margin:0;background:radial-gradient(ellipse at top,#291442,var(--bg) 65%);color:var(--text);font:16px Arial,system-ui,sans-serif;line-height:1.5}
-.wrap{width:min(1100px,calc(100% - 28px));margin:auto}
-header{text-align:center;padding:28px 0 16px}
-.logo{font-size:clamp(34px,8vw,52px);font-weight:900;letter-spacing:-2px}
-.logo span{background:linear-gradient(120deg,var(--purple),var(--pink));padding:3px 10px;border-radius:12px}
-.tagline{color:var(--muted);max-width:680px;margin:12px auto 20px}
-.search{display:flex;gap:8px;max-width:760px;margin:auto}
-input{min-width:0;flex:1;padding:15px;border:1px solid var(--line);border-radius:12px;background:#100d20;color:white;font-size:16px}
-button,.btn{border:1px solid transparent;border-radius:10px;background:linear-gradient(120deg,var(--purple),#7041d7);color:white;padding:11px 14px;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
-.hint,.muted,.desc{font-size:13px;color:var(--muted)}
-.hint{max-width:720px;margin:12px auto}
-.filters{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:20px 0}
-.chip{background:var(--panel);border-color:var(--line);border-radius:30px;padding:8px 12px}
-.chip.active{background:#54377e;border-color:var(--purple)}
-.panel,.game{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:15px}
-#finder{margin:12px 0 24px;border-color:#7650a9}
-#finder h2{margin:0 0 5px}
-.sources{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px;margin:14px 0}
-.source{background:#29203f;border:1px solid var(--line);border-radius:11px;padding:12px;text-decoration:none;display:flex;flex-direction:column;gap:4px;overflow-wrap:anywhere}
-.source strong{font-size:14px}.source small{font-size:12px;color:var(--muted)}
-.source:hover{border-color:var(--purple)}
-.heading{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.heading h2{font-size:21px;margin:15px 0 10px}
-.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr));gap:12px;margin-bottom:24px}
-.game{background:linear-gradient(145deg,#211936,#151122);min-width:0}
-.gamehead{display:flex;align-items:center;gap:11px}
-.icon{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#7046b5,#dc4f9f);display:grid;place-items:center;font-size:25px;flex-shrink:0}
-.game h3{font-size:15px;line-height:1.3;margin:0 0 4px}
-.game p{font-size:13px;color:var(--muted);min-height:38px}
-.actions{display:flex;gap:8px}
-.actions a{flex:1;font-size:12px;padding:10px 5px;text-align:center}
-.secondary{background:#2b2340;border-color:var(--line)}
-.warning{font-size:13px;color:var(--muted);margin:22px 0}
-.warning strong{color:white}
-footer{text-align:center;border-top:1px solid var(--line);padding:22px 0 30px;color:var(--muted);font-size:12px}
-.hidden{display:none!important}
-@media(max-width:480px){.search{flex-direction:column}.search button{width:100%}.heading{align-items:flex-start;flex-direction:column}}
+body{margin:0;background:#080d18;color:#fff;font-family:Arial,sans-serif}
+header{padding:22px 16px;background:#101a2b;border-bottom:1px solid #26334a}
+.logo{font-size:27px;font-weight:900;color:#55f5a3}
+.logo span{color:#fff}
+header p{color:#a9b7cb;margin-bottom:0}
+main{padding:18px 14px;max-width:1000px;margin:auto}
+h2{margin-top:25px}
+input{width:100%;padding:15px;border-radius:12px;border:1px solid #33445c;background:#121e30;color:white;font-size:16px}
+.hero{padding:24px 18px;border-radius:18px;background:linear-gradient(135deg,#153b37,#172448);margin-top:18px}
+.hero h2{font-size:27px;margin-top:0}
+.hero p,.muted{color:#b6c5d8;line-height:1.6}
+.games{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:#121b2b;border:1px solid #26364c;border-radius:15px;overflow:hidden}
+.art{height:115px;display:flex;align-items:center;justify-content:center;font-size:45px;background:linear-gradient(135deg,#173c48,#30265c)}
+.card h3{font-size:15px;margin:12px 10px 5px}
+.card p{font-size:12px;color:#b5c1d1;margin:0 10px 12px}
+.btn{display:block;text-align:center;text-decoration:none;color:#07130e;background:#55f5a3;padding:11px 7px;margin:10px;border-radius:9px;font-size:13px;font-weight:bold}
+footer{text-align:center;padding:28px 12px;color:#9aa9bd;font-size:12px}
+@media(min-width:650px){.games{grid-template-columns:repeat(4,minmax(0,1fr))}.art{height:145px}}
 </style>
 </head>
 <body>
-<header class="wrap">
-  <div class="logo"><span>MC</span> GameHub</div>
-  <p class="tagline">Your game-finding hub. Discover Android games, PC games, old releases, official downloads and alternative source pages.</p>
-  <form id="searchForm" class="search">
-    <input id="query" placeholder="Search ANY game, even an old or rare one..." autocomplete="off" aria-label="Search any game">
-    <button type="submit">Find My Game</button>
-  </form>
-  <p class="hint">Search beyond the directory. We'll prepare several targeted source options for every title you enter.</p>
-  <nav class="filters" id="filters">
-    <button class="chip active" data-cat="All">All</button>
-    <button class="chip" data-cat="Football">Football</button>
-    <button class="chip" data-cat="Action">Action</button>
-    <button class="chip" data-cat="Battle Royale">Battle Royale</button>
-    <button class="chip" data-cat="Racing">Racing</button>
-    <button class="chip" data-cat="Puzzle">Puzzle</button>
-    <button class="chip" data-cat="Adventure">Adventure</button>
-    <button class="chip" data-cat="Casual">Casual</button>
-    <button class="chip" data-cat="PC">PC</button>
-    <button class="chip" data-cat="Strategy">Strategy</button>
-  </nav>
+<header>
+<div class="logo">MC <span>GameHub</span> 🎮</div>
+<p>Discover your next favourite game.</p>
 </header>
-
-<main class="wrap">
-  <section id="finder" class="panel hidden" aria-live="polite">
-    <h2 id="finderTitle">Find game downloads</h2>
-    <p id="finderDesc" class="desc"></p>
-    <div id="sources" class="sources"></div>
-    <p class="muted">These options include source pages and targeted searches. Check that the title, version and platform match. Links are not guaranteed to contain a working download.</p>
-  </section>
-
-  <div class="heading">
-    <div><h2>Popular games directory</h2><div class="muted">Select a game or search for a title that isn't listed.</div></div>
-    <div class="muted" id="count"></div>
-  </div>
-  <div id="games" class="games"></div>
-  <div id="empty" class="panel hidden">No directory match. Your search is still available above. Check the source options to look for this game.</div>
-
-  <section class="panel warning">
-    <strong>Download safety:</strong> MC GameHub does not host game files. Prefer official publishers and trusted stores. Unofficial or modified APKs may contain malware, steal accounts or lead to bans. Never share passwords with download sites, and check file permissions before installing.
-  </section>
+<main>
+<input id="search" placeholder="🔍 Search games..." aria-label="Search games">
+<section class="hero">
+<h2>Your gaming world starts here.</h2>
+<p>Discover popular mobile games and find their official download pages. Search, explore and play!</p>
+</section>
+<h2>🔥 Popular Games</h2>
+<p class="muted">Choose a game to visit its official store or website.</p>
+<div class="games" id="games">
+<article class="card" data-name="minecraft">
+<div class="art">⛏️</div><h3>Minecraft</h3>
+<p>Build, explore and survive.</p>
+<a class="btn" href="https://play.google.com/store/apps/details?id=com.mojang.minecraftpe">Get Game</a>
+</article>
+<article class="card" data-name="free fire garena">
+<div class="art">🔥</div><h3>Free Fire</h3>
+<p>Battle royale action.</p>
+<a class="btn" href="https://play.google.com/store/apps/details?id=com.dts.freefireth">Get Game</a>
+</article>
+<article class="card" data-name="roblox">
+<div class="art">🎲</div><h3>Roblox</h3>
+<p>Explore millions of experiences.</p>
+<a class="btn" href="https://play.google.com/store/apps/details?id=com.roblox.client">Get Game</a>
+</article>
+<article class="card" data-name="call of duty mobile cod">
+<div class="art">🎯</div><h3>Call of Duty Mobile</h3>
+<p>Multiplayer shooting action.</p>
+<a class="btn" href="https://play.google.com/store/apps/details?id=com.activision.callofduty.shooter">Get Game</a>
+</article>
+<article class="card" data-name="pubg battlegrounds">
+<div class="art">🪖</div><h3>PUBG Mobile</h3>
+<p>Battle royale survival.</p>
+<a class="btn" href="https://play.google.com/store/apps/details?id=com.tencent.ig">Get Game</a>
+</article>
+<article class="card" data-name="subway surfers">
+<div class="art">🏃</div><h3>Subway Surfers</h3>
+<p>Run, jump and dodge trains.</p>
+<a class="btn" href="https://play.google.com/store/apps/details?id=com.kiloo.subwaysurf">Get Game</a>
+</article>
+<article class="card" data-name="clash of clans">
+<div class="art">🏰</div><h3>Clash of Clans</h3>
+<p>Build your village and army.</p>
+<a class="btn" href="https://play.google.com/store/apps/details?id=com.supercell.clashofclans">Get Game</a>
+</article>
+<article class="card" data-name="efootball football soccer">
+<div class="art">⚽</div><h3>eFootball</h3>
+<p>Football action on mobile.</p>
+<a class="btn" href="https://play.google.com/store/apps/details?id=jp.konami.pesam">Get Game</a>
+</article>
+<article class="card" data-name="asphalt racing">
+<div class="art">🏎️</div><h3>Asphalt Legends</h3>
+<p>High-speed arcade racing.</p>
+<a class="btn" href="https://play.google.com/store/apps/details?id=com.gameloft.android.ANMP.GloftA9HM">Get Game</a>
+</article>
+<article class="card" data-name="stumble guys">
+<div class="art">🤸</div><h3>Stumble Guys</h3>
+<p>Chaotic multiplayer fun.</p>
+<a class="btn" href="https://play.google.com/store/apps/details?id=com.kitkagames.fallbuddies">Get Game</a>
+</article>
+<article class="card" data-name="angry birds">
+<div class="art">🐦</div><h3>Angry Birds 2</h3>
+<p>Fun slingshot puzzles.</p>
+<a class="btn" href="https://play.google.com/store/apps/details?id=com.rovio.baba">Get Game</a>
+</article>
+<article class="card" data-name="pokemon go">
+<div class="art">⚡</div><h3>Pokémon GO</h3>
+<p>Explore the world and catch Pokémon.</p>
+<a class="btn" href="https://play.google.com/store/apps/details?id=com.nianticlabs.pokemongo">Get Game</a>
+</article>
+</div>
+<p id="empty" hidden class="muted">No games found. Try another search.</p>
+<h2>🛡️ Safe downloads</h2>
+<p class="muted">MC GameHub links to external official store pages. Availability and device compatibility depend on each game's publisher and your region. Never install unknown APK files.</p>
 </main>
-<footer class="wrap">MC GameHub · Independent game discovery hub · Not affiliated with game publishers.</footer>
-
+<footer>© 2026 MC GameHub · Made for mobile gamers 🎮</footer>
 <script>
-const G = [
-["Dream League Soccer 2025","Football","⚽","DLS 2025"],
-["Dream League Soccer 2021","Football","⚽","DLS 2021 DLS 21"],
-["Dream League Soccer 2024","Football","⚽","DLS 2024"],
-["DLS 2021 MOD","Football","🛠️","DLS 2021 hacked coins unlimited coins"],
-["EA SPORTS FC Mobile","Football","⚽","FC Mobile FIFA Mobile"],
-["EA SPORTS FC 26","Football","⚽","FC 26"],
-["EA SPORTS FC 25","Football","⚽","FC 25"],
-["eFootball","Football","⚽","PES eFootball Mobile"],
-["Score! Hero","Football","🥅",""],
-["Score! Match","Football","🥅",""],
-["Soccer Superstar","Football","⚽",""],
-["Total Football","Football","⚽",""],
-["Vive le Football","Football","⚽",""],
-["Football Manager 2024","Football","📋","FM24"],
-["New Star Soccer","Football","⚽","NSS"],
-["Mini Militia","Action","🔫","Doodle Army 2"],
-["Mini Militia MOD","Action","🛠️","Mini Militia mod unlimited ammo"],
-["GTA San Andreas","Action","🚘","Grand Theft Auto GTA SA"],
-["GTA Vice City","Action","🚘","Grand Theft Auto Vice City"],
-["GTA III","Action","🚘","Grand Theft Auto 3"],
-["GTA V","PC","🚘","Grand Theft Auto 5"],
-["GTA IV","PC","🚘","Grand Theft Auto 4"],
-["Call of Duty Mobile","Action","🎯","COD Mobile CODM"],
-["Call of Duty Warzone","Action","🎯",""],
-["PUBG Mobile","Battle Royale","🪖","PUBGM"],
-["Free Fire","Battle Royale","🔥","Garena Free Fire"],
-["Free Fire MAX","Battle Royale","🔥",""],
-["Fortnite","Battle Royale","🪂",""],
-["Apex Legends","Battle Royale","🎯",""],
-["Farlight 84","Battle Royale","🚀",""],
-["Blood Strike","Battle Royale","🎯",""],
-["Critical Ops","Action","🎯",""],
-["Shadow Fight 2","Action","🥷",""],
-["Shadow Fight 3","Action","🥷",""],
-["Mortal Kombat Mobile","Action","🥊",""],
-["Injustice 2","Action","🦸",""],
-["Brawlhalla","Action","⚔️",""],
-["Clash of Clans","Strategy","🏰","COC"],
-["Clash Royale","Strategy","👑",""],
-["Mobile Legends Bang Bang","Action","🛡️","MLBB"],
-["League of Legends Wild Rift","Action","⚔️","Wild Rift"],
-["Roblox","Adventure","🧱",""],
-["Minecraft","Adventure","⛏️","Bedrock Java"],
-["Minecraft MOD","Adventure","🛠️","Minecraft mod APK"],
-["Terraria","Adventure","🌳",""],
-["Stardew Valley","Adventure","🌱",""],
-["Among Us","Casual","🚀",""],
-["Fall Guys","Casual","🫘",""],
-["Brawl Stars","Action","⭐",""],
-["Subway Surfers","Casual","🚇",""],
-["Subway Surfers MOD","Casual","🛠️","Subway Surfers mod APK"],
-["Temple Run 2","Casual","🏃",""],
-["Candy Crush Saga","Puzzle","🍬","Candy Crush"],
-["Candy Crush Soda Saga","Puzzle","🍭",""],
-["Royal Match","Puzzle","👑",""],
-["Gardenscapes","Puzzle","🌷",""],
-["Homescapes","Puzzle","🏠",""],
-["Angry Birds 2","Puzzle","🐦",""],
-["Cut the Rope","Puzzle","🪢",""],
-["Fruit Ninja","Casual","🍉",""],
-["Hill Climb Racing","Racing","🚙",""],
-["Hill Climb Racing 2","Racing","🏁",""],
-["Asphalt Legends Unite","Racing","🏎️","Asphalt 9"],
-["Asphalt 8 Airborne","Racing","🏎️",""],
-["Real Racing 3","Racing","🏁",""],
-["Need for Speed No Limits","Racing","🚘","NFS"],
-["CarX Street","Racing","🚗",""],
-["Traffic Rider","Racing","🏍️",""],
-["Beach Buggy Racing 2","Racing","🏖️",""],
-["Mario Kart Tour","Racing","🍄",""],
-["Pokémon GO","Adventure","⚡","Pokemon Go"],
-["Pokémon UNITE","Action","⚡",""],
-["Pokémon TCG Pocket","Casual","🃏",""],
-["Genshin Impact","Adventure","✨",""],
-["Honkai Star Rail","Adventure","🚄",""],
-["Honkai Impact 3rd","Action","⚔️",""],
-["Wuthering Waves","Adventure","🌊",""],
-["Zenless Zone Zero","Action","🌆","ZZZ"],
-["Guardian Tales","Adventure","🗡️",""],
-["Plants vs Zombies","Strategy","🌻","PVZ"],
-["Plants vs Zombies 2","Strategy","🌻","PVZ 2"],
-["Plants vs Zombies Garden Warfare 2","PC","🌻",""],
-["Plants vs Zombies Fusion","Strategy","🌻","PVZ Fusion"],
-["The Sims 4","PC","🏡","Sims 4"],
-["The Sims Mobile","Casual","🏡",""],
-["Counter-Strike 2","PC","🎯","CS2"],
-["Valorant","PC","🎯",""],
-["Dota 2","PC","🛡️",""],
-["League of Legends","PC","⚔️","LoL"],
-["Minecraft Java Edition","PC","⛏️","Minecraft Java"],
-["Terraria PC","PC","🌳",""],
-["Hollow Knight","PC","🗡️",""],
-["Hades","PC","🔥",""],
-["Elden Ring","PC","🐉",""],
-["Cyberpunk 2077","PC","🌃",""],
-["Red Dead Redemption 2","PC","🐎","RDR2"],
-["The Witcher 3 Wild Hunt","PC","🐺","Witcher 3"],
-["Skyrim","PC","🐲","The Elder Scrolls V"],
-["Stumble Guys","Casual","🫘",""],
-["Geometry Dash","Puzzle","🔺",""],
-["Plants vs Zombies Heroes","Strategy","🃏",""],
-["8 Ball Pool","Casual","🎱",""],
-["Ludo King","Casual","🎲",""],
-["Chess.com","Strategy","♟️",""],
-["Subnautica","Adventure","🌊",""],
-["Need for Speed Most Wanted 2005","Racing","🏎️","NFS Most Wanted 2005"],
-["Prince of Persia Sands of Time","Adventure","🗡️",""],
-["Max Payne","Action","🕶️",""],
-["Angry Birds Classic","Puzzle","🐦",""],
-["FIFA 16 Mobile","Football","⚽","FIFA 16 Android"],
-["FIFA 14 Mobile","Football","⚽","FIFA 14 Android"],
-["PES 2017 Mobile","Football","⚽","Pro Evolution Soccer 2017"],
-["PES 2013","Football","⚽","Pro Evolution Soccer 2013"],
-["WWE 2K","Action","🤼","WWE wrestling"],
-["WWE 2K24","PC","🤼",""],
-["God of War","Action","⚔️",""],
-["God of War II","Action","⚔️",""],
-["God of War III","Action","⚔️",""],
-["Assassin's Creed","Adventure","🗡️",""],
-["Assassin's Creed II","Adventure","🗡️",""],
-["Far Cry 3","Action","🏹",""],
-["Far Cry 4","Action","🏹",""],
-["Watch Dogs","Action","💻",""],
-["Portal 2","Puzzle","🌀",""],
-["Left 4 Dead 2","Action","🧟",""],
-["Resident Evil 4","Action","🧟",""],
-["Resident Evil 2","Action","🧟",""],
-["Plants vs Zombies GOTY","Strategy","🌻",""],
-["Age of Empires II","Strategy","🏰",""],
-["Civilization VI","Strategy","🌍",""],
-["Euro Truck Simulator 2","PC","🚛","ETS2"],
-["Forza Horizon 5","Racing","🏎️",""],
-["Need for Speed Heat","Racing","🚘",""],
-["Trackmania","Racing","🏁",""],
-["Cuphead","Action","☕",""],
-["Undertale","Adventure","❤️",""],
-["Celeste","Adventure","🏔️",""],
-["Limbo","Adventure","🌑",""],
-["Inside","Adventure","👁️",""],
-["Terraria Mobile","Adventure","🌳",""],
-["Dead Cells","Action","⚔️",""],
-["Soul Knight","Action","🔫",""],
-["Archero","Action","🏹",""],
-["Shadowgun Legends","Action","🎯",""],
-["Modern Combat 5","Action","🔫",""],
-["Gangstar Vegas","Action","🌆",""],
-["Gangstar New Orleans","Action","🌆",""],
-["Asphalt Nitro","Racing","🏎️",""],
-["Dr. Driving","Racing","🚗",""],
-["Earn to Die 2","Racing","🚙",""],
-["Vector","Action","🏃",""],
-["Vector 2","Action","🏃",""],
-["Badland","Adventure","🌲",""],
-["Jetpack Joyride","Casual","🚀",""],
-["Pou","Casual","👾",""],
-["My Talking Tom","Casual","🐱",""],
-["My Talking Angela","Casual","🐈",""],
-["Plants vs Zombies 3","Strategy","🌻",""],
-["Tetris","Puzzle","🧩",""],
-["2048","Puzzle","🔢",""],
-["Monument Valley","Puzzle","🏛️",""],
-["Where's My Water","Puzzle","💧",""],
-["Angry Birds Star Wars","Puzzle","🐦",""],
-["Angry Birds Rio","Puzzle","🐦",""],
-["FarmVille 2","Casual","🌾",""],
-["Hay Day","Casual","🚜",""],
-["Township","Casual","🏘️",""],
-["SimCity BuildIt","Strategy","🏙️",""],
-["Age of Empires Mobile","Strategy","🏰",""],
-["Total War Rome II","PC","🏛️",""],
-["The Forest","PC","🌲",""],
-["Sons of the Forest","PC","🌲",""],
-["Palworld","PC","🐾",""],
-["Valheim","PC","🛡️",""],
-["Garry's Mod","PC","🔧",""],
-["Team Fortress 2","PC","🎯",""],
-["Left 4 Dead","PC","🧟",""],
-["Call of Duty Black Ops II","PC","🎯",""],
-["Call of Duty Modern Warfare 2","PC","🎯",""],
-["Battlefield 4","PC","💥",""],
-["Battlefield 1","PC","💥",""],
-["The Sims 3","PC","🏡",""],
-["Spore","PC","🧬",""],
-["RollerCoaster Tycoon 2","PC","🎢",""],
-["Plants vs Zombies Garden Warfare","PC","🌻",""]
-];
-
-const $=id=>document.getElementById(id);
-let category="All", query="";
-function normalize(s){return String(s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim()}
-function enc(s){return encodeURIComponent(s)}
-function makeSources(name){
- const q=enc(name), exact=enc('"'+name+'"');
- return [
- ["Official publisher","Look for the game's official page","https://www.google.com/search?q="+exact+"+official+game"],
- ["Google Play","Android store listings","https://play.google.com/store/search?q="+q+"&c=apps"],
- ["APKMirror","Search game pages","https://www.google.com/search?q=site%3Aapkmirror.com+"+q],
- ["Uptodown","Search game pages","https://www.google.com/search?q=site%3Auptodown.com+"+q],
- ["APKPure","Search game pages","https://www.google.com/search?q=site%3Aapkpure.com+"+q],
- ["Older versions","Search earlier releases","https://www.google.com/search?q="+q+"+older+version+APK"],
- ["Internet Archive","Search archive records","https://archive.org/advancedsearch.php?q="+q+"&fl%5B%5D=identifier%2Ctitle&output=html"],
- ["MOD / hacked versions","Search modified editions; unverified","https://www.google.com/search?q="+q+"+mod+APK+modified+version"],
- ["PC games","Search PC versions and stores","https://www.google.com/search?q="+q+"+PC+game+download+Steam+GOG"],
- ["Other download pages","Broader source search","https://www.google.com/search?q="+q+"+game+download+APK+PC"]
- ];
-}
-function openFinder(name){
- $("finderTitle").textContent="Download sources for: "+name;
- $("finderDesc").textContent="We prepared several routes to find this game. Check each source for the exact version and platform.";
- $("sources").replaceChildren();
- makeSources(name).forEach(([title,desc,url])=>{
-  const a=document.createElement("a");a.className="source";a.href=url;a.target="_blank";a.rel="noopener noreferrer";
-  const strong=document.createElement("strong");strong.textContent=title;
-  const small=document.createElement("small");small.textContent=desc;
-  a.append(strong,small);$("sources").append(a);
+const search=document.getElementById('search');
+const cards=[...document.querySelectorAll('.card')];
+search.addEventListener('input',()=>{
+ const term=search.value.trim().toLowerCase();
+ let shown=0;
+ cards.forEach(card=>{
+  const match=card.dataset.name.includes(term);
+  card.hidden=!match;
+  if(match)shown++;
  });
- $("finder").classList.remove("hidden");
-}
-function render(){
- const q=normalize(query);
- const list=G.filter(g=>(category==="All"||g[1]===category)&&(!q||normalize(g.join(" ")).includes(q)));
- $("games").replaceChildren();
- list.forEach(g=>{
-  const [name,cat,emoji]=g;
-  const card=document.createElement("article");card.className="game";
-  const head=document.createElement("div");head.className="gamehead";
-  const icon=document.createElement("div");icon.className="icon";icon.textContent=emoji;
-  const titlebox=document.createElement("div");
-  const h=document.createElement("h3");h.textContent=name;
-  const small=document.createElement("div");small.className="muted";small.textContent=cat;
-  titlebox.append(h,small);head.append(icon,titlebox);
-  const p=document.createElement("p");p.textContent="Find source pages for official, older, Android, PC or alternative editions.";
-  const actions=document.createElement("div");actions.className="actions";
-  const find=document.createElement("a");find.className="btn";find.href="#finder";find.textContent="Find downloads";
-  find.addEventListener("click",e=>{e.preventDefault();$("query").value=name;query=name;openFinder(name);render();$("finder").scrollIntoView({behavior:"smooth",block:"start"})});
-  const info=document.createElement("a");info.className="btn secondary";info.href="https://www.google.com/search?q="+enc('"'+name+'" game');info.target="_blank";info.rel="noopener noreferrer";info.textContent="Game info";
-  actions.append(find,info);card.append(head,p,actions);$("games").append(card);
- });
- $("count").textContent=list.length+" shown · "+G.length+" directory entries";
- $("empty").classList.toggle("hidden",list.length!==0);
-}
-$("searchForm").addEventListener("submit",e=>{
- e.preventDefault();query=$("query").value.trim();
- if(query)openFinder(query);else $("finder").classList.add("hidden");
- render();
+ document.getElementById('empty').hidden=shown!==0;
 });
-$("query").addEventListener("input",()=>{
- query=$("query").value.trim();render();
- if(!query)$("finder").classList.add("hidden");
-});
-$("filters").addEventListener("click",e=>{
- const b=e.target.closest("[data-cat]");if(!b)return;
- category=b.dataset.cat;
- document.querySelectorAll(".chip").forEach(c=>c.classList.toggle("active",c===b));
- render();
-});
-render();
 </script>
 </body>
-</html>
+  </html>
+  
