@@ -3,126 +3,165 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#080d18">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#100b20">
 <title>MC GameHub</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080d18;color:#fff;font-family:Arial,sans-serif}
-header{padding:22px 16px;background:#101a2b;border-bottom:1px solid #26334a}
-.logo{font-size:27px;font-weight:900;color:#55f5a3}
-.logo span{color:#fff}
-header p{color:#a9b7cb;margin-bottom:0}
-main{padding:18px 14px;max-width:1000px;margin:auto}
-h2{margin-top:25px}
-input{width:100%;padding:15px;border-radius:12px;border:1px solid #33445c;background:#121e30;color:white;font-size:16px}
-.hero{padding:24px 18px;border-radius:18px;background:linear-gradient(135deg,#153b37,#172448);margin-top:18px}
-.hero h2{font-size:27px;margin-top:0}
-.hero p,.muted{color:#b6c5d8;line-height:1.6}
-.games{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.card{background:#121b2b;border:1px solid #26364c;border-radius:15px;overflow:hidden}
-.art{height:115px;display:flex;align-items:center;justify-content:center;font-size:45px;background:linear-gradient(135deg,#173c48,#30265c)}
-.card h3{font-size:15px;margin:12px 10px 5px}
-.card p{font-size:12px;color:#b5c1d1;margin:0 10px 12px}
-.btn{display:block;text-align:center;text-decoration:none;color:#07130e;background:#55f5a3;padding:11px 7px;margin:10px;border-radius:9px;font-size:13px;font-weight:bold}
-footer{text-align:center;padding:28px 12px;color:#9aa9bd;font-size:12px}
-@media(min-width:650px){.games{grid-template-columns:repeat(4,minmax(0,1fr))}.art{height:145px}}
+body{margin:0;background:#0d0a18;color:#f8f5ff;font-family:Arial,sans-serif}
+header,main,footer{width:min(1000px,92%);margin:auto}
+header{text-align:center;padding:30px 0}
+h1{font-size:38px;margin:10px}
+h1 span{color:#ff65c5}
+p{color:#bcb3d3;line-height:1.5}
+input,button{padding:13px;border-radius:10px;border:1px solid #49365e;font-size:16px}
+input{width:100%;background:#19142b;color:white;margin:10px 0}
+button{background:#8c55e8;color:white;cursor:pointer}
+.filters{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin:15px 0}
+.filters button{font-size:13px;padding:9px}
+#games{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.card,.panel{background:#19142b;border:1px solid #39304f;border-radius:14px;padding:15px}
+.card h3{margin:5px 0}
+.card .emoji{font-size:30px}
+.card a,.sources a{display:inline-block;background:#7046b5;color:white;padding:10px;border-radius:9px;text-decoration:none;margin:5px 4px 0 0;font-size:13px}
+.sources{display:flex;flex-wrap:wrap;gap:8px}
+.sources a{overflow-wrap:anywhere}
+small{color:#bcb3d3}
+footer{padding:25px 0;text-align:center}
 </style>
 </head>
 <body>
 <header>
-<div class="logo">MC <span>GameHub</span> 🎮</div>
-<p>Discover your next favourite game.</p>
+<h1><span>MC</span> GameHub 🎮</h1>
+<p>Discover popular games, search for your favourites, and find game information and download sources.</p>
+<input id="search" placeholder="Search any game, e.g. Mini Militia">
+<div class="filters" id="filters"></div>
 </header>
 <main>
-<input id="search" placeholder="🔍 Search games..." aria-label="Search games">
-<section class="hero">
-<h2>Your gaming world starts here.</h2>
-<p>Discover popular mobile games and find their official download pages. Search, explore and play!</p>
+<section class="panel" id="finder" hidden>
+<h2 id="findTitle">Game sources</h2>
+<p>Choose a source below. Check the developer, platform and version before downloading.</p>
+<div class="sources" id="sources"></div>
 </section>
-<h2>🔥 Popular Games</h2>
-<p class="muted">Choose a game to visit its official store or website.</p>
-<div class="games" id="games">
-<article class="card" data-name="minecraft">
-<div class="art">⛏️</div><h3>Minecraft</h3>
-<p>Build, explore and survive.</p>
-<a class="btn" href="https://play.google.com/store/apps/details?id=com.mojang.minecraftpe">Get Game</a>
-</article>
-<article class="card" data-name="free fire garena">
-<div class="art">🔥</div><h3>Free Fire</h3>
-<p>Battle royale action.</p>
-<a class="btn" href="https://play.google.com/store/apps/details?id=com.dts.freefireth">Get Game</a>
-</article>
-<article class="card" data-name="roblox">
-<div class="art">🎲</div><h3>Roblox</h3>
-<p>Explore millions of experiences.</p>
-<a class="btn" href="https://play.google.com/store/apps/details?id=com.roblox.client">Get Game</a>
-</article>
-<article class="card" data-name="call of duty mobile cod">
-<div class="art">🎯</div><h3>Call of Duty Mobile</h3>
-<p>Multiplayer shooting action.</p>
-<a class="btn" href="https://play.google.com/store/apps/details?id=com.activision.callofduty.shooter">Get Game</a>
-</article>
-<article class="card" data-name="pubg battlegrounds">
-<div class="art">🪖</div><h3>PUBG Mobile</h3>
-<p>Battle royale survival.</p>
-<a class="btn" href="https://play.google.com/store/apps/details?id=com.tencent.ig">Get Game</a>
-</article>
-<article class="card" data-name="subway surfers">
-<div class="art">🏃</div><h3>Subway Surfers</h3>
-<p>Run, jump and dodge trains.</p>
-<a class="btn" href="https://play.google.com/store/apps/details?id=com.kiloo.subwaysurf">Get Game</a>
-</article>
-<article class="card" data-name="clash of clans">
-<div class="art">🏰</div><h3>Clash of Clans</h3>
-<p>Build your village and army.</p>
-<a class="btn" href="https://play.google.com/store/apps/details?id=com.supercell.clashofclans">Get Game</a>
-</article>
-<article class="card" data-name="efootball football soccer">
-<div class="art">⚽</div><h3>eFootball</h3>
-<p>Football action on mobile.</p>
-<a class="btn" href="https://play.google.com/store/apps/details?id=jp.konami.pesam">Get Game</a>
-</article>
-<article class="card" data-name="asphalt racing">
-<div class="art">🏎️</div><h3>Asphalt Legends</h3>
-<p>High-speed arcade racing.</p>
-<a class="btn" href="https://play.google.com/store/apps/details?id=com.gameloft.android.ANMP.GloftA9HM">Get Game</a>
-</article>
-<article class="card" data-name="stumble guys">
-<div class="art">🤸</div><h3>Stumble Guys</h3>
-<p>Chaotic multiplayer fun.</p>
-<a class="btn" href="https://play.google.com/store/apps/details?id=com.kitkagames.fallbuddies">Get Game</a>
-</article>
-<article class="card" data-name="angry birds">
-<div class="art">🐦</div><h3>Angry Birds 2</h3>
-<p>Fun slingshot puzzles.</p>
-<a class="btn" href="https://play.google.com/store/apps/details?id=com.rovio.baba">Get Game</a>
-</article>
-<article class="card" data-name="pokemon go">
-<div class="art">⚡</div><h3>Pokémon GO</h3>
-<p>Explore the world and catch Pokémon.</p>
-<a class="btn" href="https://play.google.com/store/apps/details?id=com.nianticlabs.pokemongo">Get Game</a>
-</article>
-</div>
-<p id="empty" hidden class="muted">No games found. Try another search.</p>
-<h2>🛡️ Safe downloads</h2>
-<p class="muted">MC GameHub links to external official store pages. Availability and device compatibility depend on each game's publisher and your region. Never install unknown APK files.</p>
+<h2>Popular Games</h2>
+<div id="games"></div>
+<section class="panel">
+<h3>Download safely</h3>
+<p>Prefer official publishers and Google Play. Third-party APKs and modified versions can contain malware or steal accounts. MC GameHub does not host game files.</p>
+</section>
 </main>
-<footer>© 2026 MC GameHub · Made for mobile gamers 🎮</footer>
+<footer>MC GameHub · Independent game discovery directory</footer>
 <script>
-const search=document.getElementById('search');
-const cards=[...document.querySelectorAll('.card')];
-search.addEventListener('input',()=>{
- const term=search.value.trim().toLowerCase();
- let shown=0;
- cards.forEach(card=>{
-  const match=card.dataset.name.includes(term);
-  card.hidden=!match;
-  if(match)shown++;
- });
- document.getElementById('empty').hidden=shown!==0;
+const games=[
+["Mini Militia","Action","🔫","Doodle Army 2"],
+["Mini Militia MOD","Action","🛠️","Mini Militia modified"],
+["Dream League Soccer 2025","Football","⚽","DLS 2025"],
+["Dream League Soccer 2021","Football","⚽","DLS 2021 DLS 21"],
+["Dream League Soccer 2024","Football","⚽","DLS 2024"],
+["EA SPORTS FC Mobile","Football","⚽","FIFA Mobile"],
+["eFootball","Football","⚽","PES"],
+["Score! Hero","Football","🥅",""],
+["GTA San Andreas","Action","🚘","GTA SA"],
+["GTA Vice City","Action","🚘",""],
+["GTA III","Action","🚘",""],
+["Call of Duty Mobile","Action","🎯","CODM"],
+["PUBG Mobile","Battle Royale","🪖",""],
+["Free Fire","Battle Royale","🔥",""],
+["Free Fire MAX","Battle Royale","🔥",""],
+["Fortnite","Battle Royale","🪂",""],
+["Clash of Clans","Strategy","🏰",""],
+["Clash Royale","Strategy","👑",""],
+["Roblox","Adventure","🧱",""],
+["Minecraft","Adventure","⛏️",""],
+["Minecraft MOD","Adventure","🛠️","Minecraft mod APK"],
+["Among Us","Casual","🚀",""],
+["Brawl Stars","Action","⭐",""],
+["Subway Surfers","Casual","🚇",""],
+["Temple Run 2","Casual","🏃",""],
+["Candy Crush Saga","Puzzle","🍬",""],
+["Fruit Ninja","Casual","🍉",""],
+["Hill Climb Racing","Racing","🚙",""],
+["Asphalt Legends Unite","Racing","🏎️","Asphalt 9"],
+["Real Racing 3","Racing","🏁",""],
+["Need for Speed No Limits","Racing","🚘","NFS"],
+["Genshin Impact","Adventure","✨",""],
+["Honkai Star Rail","Adventure","🚄",""],
+["Plants vs Zombies","Strategy","🌻","PVZ"],
+["The Sims 4","PC","🏡",""],
+["Counter-Strike 2","PC","🎯","CS2"],
+["Valorant","PC","🎯",""],
+["Dota 2","PC","🛡️",""],
+["Stumble Guys","Casual","🫘",""],
+["Geometry Dash","Puzzle","🔺",""],
+["8 Ball Pool","Casual","🎱",""],
+["Ludo King","Casual","🎲",""],
+["Pou","Casual","🐾",""],
+["Jetpack Joyride","Casual","🚀",""],
+["Rocket League","PC","🚗",""],
+["Forza Horizon 5","PC","🏎️",""],
+["Euro Truck Simulator 2","PC","🚛","ETS2"]
+];
+const categories=["All",...new Set(games.map(g=>g[1]))];
+let category="All";
+const search=document.getElementById("search");
+const grid=document.getElementById("games");
+const filters=document.getElementById("filters");
+categories.forEach(c=>{
+ const b=document.createElement("button");
+ b.textContent=c;
+ b.onclick=()=>{category=c;render();};
+ filters.appendChild(b);
 });
+function findSources(name){
+ const q=encodeURIComponent(name);
+ const items=[
+ ["Official game search","https://www.google.com/search?q="+q+"+official+game"],
+ ["Google Play","https://play.google.com/store/search?q="+q+"&c=apps"],
+ ["APKMirror search","https://www.google.com/search?q=site%3Aapkmirror.com+"+q],
+ ["Uptodown search","https://www.google.com/search?q=site%3Auptodown.com+"+q],
+ ["Older versions","https://www.google.com/search?q="+q+"+older+version"],
+ ["More game sources","https://www.google.com/search?q="+q+"+game+download"]
+ ];
+ const box=document.getElementById("sources");
+ box.replaceChildren();
+ items.forEach(([label,url])=>{
+  const a=document.createElement("a");
+  a.href=url;a.target="_blank";a.rel="noopener noreferrer";
+  a.textContent=label;box.appendChild(a);
+ });
+ document.getElementById("findTitle").textContent="Sources for: "+name;
+ document.getElementById("finder").hidden=false;
+}
+function render(){
+ const q=search.value.toLowerCase().trim();
+ grid.replaceChildren();
+ const list=games.filter(g=>(category==="All"||g[1]===category)&&g.join(" ").toLowerCase().includes(q));
+ list.forEach(g=>{
+  const card=document.createElement("article");
+  card.className="card";
+  const title=document.createElement("h3");
+  title.textContent=g[2]+" "+g[0];
+  const cat=document.createElement("small");
+  cat.textContent=g[1];
+  const desc=document.createElement("p");
+  desc.textContent="Find information and available download sources.";
+  const btn=document.createElement("button");
+  btn.textContent="Find downloads";
+  btn.onclick=()=>findSources(g[0]);
+  card.append(title,cat,desc,btn);
+  grid.appendChild(card);
+ });
+ if(!list.length) {
+  const p=document.createElement("p");
+  p.textContent="No directory match. Search sources for this title:";
+  const b=document.createElement("button");
+  b.textContent="Find this game";
+  b.onclick=()=>findSources(search.value.trim());
+  grid.append(p,b);
+ }
+}
+search.addEventListener("input",render);
+render();
 </script>
 </body>
-  </html>
-  
+</html>
