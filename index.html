@@ -190,7 +190,17 @@ function render(){
  const list=games.filter(g=>(category==="All"||g[1]===category)&&g.join(" ").toLowerCase().includes(q));
  list.forEach(g=>{
   const card=document.createElement("article");card.className="card";
-  const art=document.createElement("div");art.className="art";art.textContent=g[2];
+  const art=document.createElement("div");art.className="art";const img=document.createElement("img");
+img.alt=g[0];
+img.style.cssText="width:100%;height:100%;object-fit:cover;border-radius:10px";
+art.textContent="";
+art.appendChild(img);
+fetch("https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch="+encodeURIComponent(g[0])+"&gsrnamespace=0&gsrlimit=1&prop=pageimages&piprop=thumbnail&pithumbsize=400&format=json&origin=*")
+.then(r=>r.json()).then(d=>{
+const p=Object.values(d.query?.pages||{})[0];
+if(p?.thumbnail?.source)img.src=p.thumbnail.source;
+else art.textContent=g[2];
+}).catch(()=>{art.textContent=g[2]});
   const cat=document.createElement("div");cat.className="category";cat.textContent=g[1];
   const title=document.createElement("h3");title.textContent=g[0];
   const desc=document.createElement("p");desc.textContent="Explore game information and available sources.";
