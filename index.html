@@ -4,53 +4,99 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#100b20">
-<title>MC GameHub</title>
+<meta name="theme-color" content="#090909">
+<title>MC GameHub | Pro Gaming</title>
 <style>
+:root{--bg:#090909;--panel:#151515;--line:#303030;--red:#ff303b;--muted:#aaa}
 *{box-sizing:border-box}
-body{margin:0;background:#0d0a18;color:#f8f5ff;font-family:Arial,sans-serif}
-header,main,footer{width:min(1000px,92%);margin:auto}
-header{text-align:center;padding:30px 0}
-h1{font-size:38px;margin:10px}
-h1 span{color:#ff65c5}
-p{color:#bcb3d3;line-height:1.5}
-input,button{padding:13px;border-radius:10px;border:1px solid #49365e;font-size:16px}
-input{width:100%;background:#19142b;color:white;margin:10px 0}
-button{background:#8c55e8;color:white;cursor:pointer}
-.filters{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin:15px 0}
-.filters button{font-size:13px;padding:9px}
-#games{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.card,.panel{background:#19142b;border:1px solid #39304f;border-radius:14px;padding:15px}
-.card h3{margin:5px 0}
-.card .emoji{font-size:30px}
-.card a,.sources a{display:inline-block;background:#7046b5;color:white;padding:10px;border-radius:9px;text-decoration:none;margin:5px 4px 0 0;font-size:13px}
+body{margin:0;background:var(--bg);color:#fff;font-family:Arial,Helvetica,sans-serif}
+header,main,footer{width:min(1100px,92%);margin:auto}
+header{padding:22px 0 16px}
+nav{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding-bottom:16px}
+.logo{font-weight:900;font-size:23px;letter-spacing:-1px}
+.logo span{color:var(--red)}
+.tag{font-size:10px;border:1px solid #5b2529;color:#ff7b81;padding:6px 8px;border-radius:20px}
+.hero{padding:26px 0 20px}
+.eyebrow{color:var(--red);font-size:12px;font-weight:bold;letter-spacing:2px}
+h1{font-size:clamp(32px,7vw,52px);line-height:1.03;margin:10px 0}
+h1 span{color:var(--red)}
+p{color:var(--muted);line-height:1.5}
+.search{display:flex;gap:8px;margin-top:18px}
+input{min-width:0;flex:1;background:#171717;color:#fff;border:1px solid #383838;border-radius:10px;padding:14px;font-size:15px;outline:none}
+input:focus{border-color:var(--red)}
+button{background:#222;color:#fff;border:1px solid #393939;border-radius:9px;padding:10px 13px;font-weight:bold;cursor:pointer}
+button:active{transform:scale(.98)}
+.search button,.redbtn{background:var(--red);border-color:var(--red);color:white}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0 24px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px}
+.stat strong{display:block;font-size:20px;color:var(--red)}
+.stat small{color:var(--muted);font-size:11px}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:25px 0 13px}
+h2{font-size:20px;margin:0}
+.sectionhead small{color:var(--muted)}
+.filters{display:flex;gap:7px;overflow-x:auto;padding:2px 0 12px}
+.filters button{white-space:nowrap;font-size:12px}
+.filters button.active{background:var(--red);border-color:var(--red)}
+#games{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.card{min-width:0;background:linear-gradient(145deg,#1a1a1a,#101010);border:1px solid #303030;border-radius:13px;padding:13px;overflow:hidden}
+.art{height:84px;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse,#492025 0%,#211214 50%,#111 100%);border-radius:9px;font-size:40px;margin-bottom:12px}
+.card h3{font-size:15px;margin:0 0 7px;overflow-wrap:anywhere}
+.category{color:#ff747b;font-size:10px;text-transform:uppercase;letter-spacing:1px}
+.card p{font-size:12px;min-height:34px;margin:8px 0}
+.card button{width:100%;font-size:12px;padding:11px 4px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:15px;margin-top:20px}
+.panel h3{margin-top:0}
 .sources{display:flex;flex-wrap:wrap;gap:8px}
-.sources a{overflow-wrap:anywhere}
-small{color:#bcb3d3}
-footer{padding:25px 0;text-align:center}
+.sources a{display:inline-block;text-decoration:none;background:#242424;color:white;border:1px solid #484848;border-radius:8px;padding:11px;font-size:12px}
+.sources a:first-child{border-color:var(--red);background:#45171b}
+#finder[hidden]{display:none}
+#empty{padding:20px 0;color:var(--muted)}
+footer{padding:28px 0;text-align:center;font-size:12px;color:#777}
+footer strong{color:var(--red)}
+@media(min-width:650px){#games{grid-template-columns:repeat(3,minmax(0,1fr))}.art{height:110px}}
+@media(min-width:900px){#games{grid-template-columns:repeat(4,minmax(0,1fr))}}
 </style>
 </head>
 <body>
 <header>
-<h1><span>MC</span> GameHub 🎮</h1>
-<p>Discover popular games, search for your favourites, and find game information and download sources.</p>
-<input id="search" placeholder="Search any game, e.g. Mini Militia">
-<div class="filters" id="filters"></div>
+<nav>
+<div class="logo"><span>MC</span> GAMEHUB</div>
+<div class="tag">● PRO GAMING</div>
+</nav>
+<section class="hero">
+<div class="eyebrow">YOUR NEXT GAME STARTS HERE</div>
+<h1>LEVEL UP.<br><span>PLAY MORE.</span></h1>
+<p>Discover games, explore genres and find trusted places to get them.</p>
+<div class="search">
+<input id="search" type="search" placeholder="Search Mini Militia, DLS, GTA..." aria-label="Search games">
+<button id="searchBtn">SEARCH</button>
+</div>
+</section>
+<div class="stats">
+<div class="stat"><strong id="gameCount">0</strong><small>GAMES LISTED</small></div>
+<div class="stat"><strong>ALL</strong><small>GENRES</small></div>
+<div class="stat"><strong>24/7</strong><small>GAME DISCOVERY</small></div>
+</div>
 </header>
 <main>
+<div class="sectionhead">
+<h2>🔥 Popular Games</h2>
+<small>FIND YOUR NEXT PLAY</small>
+</div>
+<div class="filters" id="filters"></div>
+<div id="games"></div>
+<div id="empty" hidden>No matching games. Try another name or search for its download sources.</div>
 <section class="panel" id="finder" hidden>
-<h2 id="findTitle">Game sources</h2>
-<p>Choose a source below. Check the developer, platform and version before downloading.</p>
+<div class="sectionhead"><h2 id="findTitle">Game download sources</h2></div>
+<p>Choose a source to check availability. Prefer official publishers and Google Play when available.</p>
 <div class="sources" id="sources"></div>
 </section>
-<h2>Popular Games</h2>
-<div id="games"></div>
 <section class="panel">
-<h3>Download safely</h3>
-<p>Prefer official publishers and Google Play. Third-party APKs and modified versions can contain malware or steal accounts. MC GameHub does not host game files.</p>
+<h3>🛡️ Play smart. Download safely.</h3>
+<p>MC GameHub helps you discover games; it does not host game files. Check the publisher and Android compatibility before installing. Unofficial APKs and MOD files can contain malware or put your accounts at risk.</p>
 </section>
 </main>
-<footer>MC GameHub · Independent game discovery directory</footer>
+<footer><strong>MC GAMEHUB</strong><br>BUILT FOR GAMERS · BLACK & RED PRO</footer>
 <script>
 const games=[
 ["Mini Militia","Action","🔫","Doodle Army 2"],
@@ -99,20 +145,24 @@ const games=[
 ["Jetpack Joyride","Casual","🚀",""],
 ["Rocket League","PC","🚗",""],
 ["Forza Horizon 5","PC","🏎️",""],
-["Euro Truck Simulator 2","PC","🚛","ETS2"]
+["Euro Truck Simulator 2","PC","🚛",""]
 ];
 const categories=["All",...new Set(games.map(g=>g[1]))];
 let category="All";
 const search=document.getElementById("search");
 const grid=document.getElementById("games");
 const filters=document.getElementById("filters");
+document.getElementById("gameCount").textContent=games.length;
 categories.forEach(c=>{
  const b=document.createElement("button");
  b.textContent=c;
- b.onclick=()=>{category=c;render();};
+ if(c==="All")b.classList.add("active");
+ b.onclick=()=>{category=c;[...filters.children].forEach(x=>x.classList.toggle("active",x===b));render();};
  filters.appendChild(b);
 });
 function findSources(name){
+ name=name.trim();
+ if(!name)return;
  const q=encodeURIComponent(name);
  const items=[
  ["Official game search","https://www.google.com/search?q="+q+"+official+game"],
@@ -129,38 +179,30 @@ function findSources(name){
   a.href=url;a.target="_blank";a.rel="noopener noreferrer";
   a.textContent=label;box.appendChild(a);
  });
- document.getElementById("findTitle").textContent="Sources for: "+name;
- document.getElementById("finder").hidden=false;
+ document.getElementById("findTitle").textContent="SOURCES: "+name;
+ const finder=document.getElementById("finder");
+ finder.hidden=false;
+ finder.scrollIntoView({behavior:"smooth",block:"start"});
 }
 function render(){
  const q=search.value.toLowerCase().trim();
  grid.replaceChildren();
  const list=games.filter(g=>(category==="All"||g[1]===category)&&g.join(" ").toLowerCase().includes(q));
  list.forEach(g=>{
-  const card=document.createElement("article");
-  card.className="card";
-  const title=document.createElement("h3");
-  title.textContent=g[2]+" "+g[0];
-  const cat=document.createElement("small");
-  cat.textContent=g[1];
-  const desc=document.createElement("p");
-  desc.textContent="Find information and available download sources.";
-  const btn=document.createElement("button");
-  btn.textContent="Find downloads";
+  const card=document.createElement("article");card.className="card";
+  const art=document.createElement("div");art.className="art";art.textContent=g[2];
+  const cat=document.createElement("div");cat.className="category";cat.textContent=g[1];
+  const title=document.createElement("h3");title.textContent=g[0];
+  const desc=document.createElement("p");desc.textContent="Explore game information and available sources.";
+  const btn=document.createElement("button");btn.className="redbtn";btn.textContent="FIND DOWNLOADS";
   btn.onclick=()=>findSources(g[0]);
-  card.append(title,cat,desc,btn);
-  grid.appendChild(card);
+  card.append(art,cat,title,desc,btn);grid.appendChild(card);
  });
- if(!list.length) {
-  const p=document.createElement("p");
-  p.textContent="No directory match. Search sources for this title:";
-  const b=document.createElement("button");
-  b.textContent="Find this game";
-  b.onclick=()=>findSources(search.value.trim());
-  grid.append(p,b);
- }
+ document.getElementById("empty").hidden=list.length!==0;
 }
 search.addEventListener("input",render);
+document.getElementById("searchBtn").onclick=render;
+search.addEventListener("keydown",e=>{if(e.key==="Enter")render()});
 render();
 </script>
 </body>
